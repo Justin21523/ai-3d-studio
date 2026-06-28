@@ -53,10 +53,10 @@ class TripoSRBackend(BaseBackend):
         available = self._loader.is_available()
 
         reason: Optional[str] = self._loader.availability_reason()
-        if available:
+        if available and self._device == "cuda":
             try:
                 import torch  # type: ignore[import]
-                if self._device == "cuda" and not torch.cuda.is_available():
+                if not torch.cuda.is_available():
                     available = False
                     reason = "CUDA requested but torch.cuda.is_available() is False."
             except ImportError:
@@ -89,6 +89,16 @@ class TripoSRBackend(BaseBackend):
                     error=str(exc),
                 )
 
+        # Load image
+        image_path = Path(request.input_image_path)
+        if not image_path.exists():
+            return GenerationResult(
+                success=False,
+                provider=self.name,
+                task_type="image-to-3d",
+                error=f"Input image not found: {image_path}",
+            )
+
         try:
             from PIL import Image  # type: ignore[import]
             import torch  # type: ignore[import]
@@ -98,16 +108,6 @@ class TripoSRBackend(BaseBackend):
                 provider=self.name,
                 task_type="image-to-3d",
                 error=f"Missing dependency: {exc}",
-            )
-
-        # Load image
-        image_path = Path(request.input_image_path)
-        if not image_path.exists():
-            return GenerationResult(
-                success=False,
-                provider=self.name,
-                task_type="image-to-3d",
-                error=f"Input image not found: {image_path}",
             )
 
         try:

@@ -23,8 +23,7 @@ def test_check_availability_no_weights(backend, tmp_path):
 
 
 def test_check_availability_no_cuda(backend):
-    with patch.object(backend._loader, "is_available", return_value=True), \
-         patch("torch.cuda.is_available", return_value=False):
+    with patch.object(backend._loader, "is_available", return_value=True):
         result = backend.check_availability()
     # device is "cpu" so CUDA check is skipped
     assert result.available is True

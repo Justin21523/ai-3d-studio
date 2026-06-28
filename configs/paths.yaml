@@ -1,0 +1,31 @@
+# AI 3D Studio — Path Configuration
+# All paths must be absolute. Use /mnt/c/ for Windows drives via WSL.
+# This file is loaded into PathConfig at runtime via ai3d.core.config.
+
+ai_models_root: /mnt/c/ai_models
+ai_tools_root: /mnt/c/ai_tools
+data_root: /mnt/data
+
+# Output directories (created on first run)
+outputs_root: /mnt/data/3d-studio/outputs
+cache_root: /mnt/c/ai_cache/3d-studio
+previews_root: /mnt/data/3d-studio/previews
+
+# Asset registry — one YAML per registered asset
+asset_registry_dir: /mnt/data/3d-studio/registry/assets
+
+# Blender
+blender_executable: /usr/bin/blender
+blender_templates_dir: ""   # resolved to repo/blender_templates at runtime if empty
+
+# ComfyUI
+comfyui_root: /mnt/c/ai_tools/comfyui
+comfyui_input_dir: /mnt/c/ai_tools/comfyui/input
+comfyui_base_url: http://127.0.0.1:8188
+
+metadata:
+  notes:
+    - "Edit this file to match your local environment."
+    - "ai_models_root should match /mnt/c/ai_models (WSL path to Windows AI models)."
+    - "Outputs go under data_root to keep them off the C: drive."
+    - "blender_executable: on Ubuntu with Blender PPA use /usr/bin/blender or full snap path."

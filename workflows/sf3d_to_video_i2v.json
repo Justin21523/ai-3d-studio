@@ -1,0 +1,51 @@
+{
+  "_comment": "SF3D turntable → image-to-video conditioning workflow template.",
+  "_placeholders": {
+    "__MESH_PATH__": "Absolute path to SF3D PBR-textured GLB",
+    "__FRAME_COUNT__": "Number of turntable frames (integer)",
+    "__FPS__": "Frames per second (integer)",
+    "__PROMPT__": "Video generation prompt (string)",
+    "__OUTPUT_PREFIX__": "Output filename prefix (string)"
+  },
+  "1": {
+    "class_type": "LoadImage",
+    "inputs": {
+      "image": "__MESH_PATH__"
+    }
+  },
+  "2": {
+    "class_type": "VAEEncode",
+    "inputs": {
+      "pixels": ["1", 0],
+      "vae": ["3", 0]
+    }
+  },
+  "3": {
+    "class_type": "VAELoader",
+    "inputs": {
+      "vae_name": "ae.safetensors"
+    }
+  },
+  "4": {
+    "class_type": "CLIPTextEncode",
+    "inputs": {
+      "text": "__PROMPT__",
+      "clip": ["5", 0]
+    }
+  },
+  "5": {
+    "class_type": "CLIPLoader",
+    "inputs": {
+      "clip_name": "clip_l.safetensors",
+      "type": "stable_diffusion"
+    }
+  },
+  "6": {
+    "class_type": "SaveImage",
+    "inputs": {
+      "images": ["2", 0],
+      "filename_prefix": "__OUTPUT_PREFIX__"
+    }
+  },
+  "_note": "Structural scaffold template. SF3D produces PBR-textured GLB — materials preserved in turntable render. Replace nodes with your actual exported API-format workflow."
+}

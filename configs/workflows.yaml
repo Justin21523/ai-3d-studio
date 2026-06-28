@@ -1,0 +1,116 @@
+# AI 3D Studio — Workflow Registry
+# Each entry maps a named ComfyUI workflow to its template JSON and I/O contract.
+# Matches WorkflowRegistryEntry Pydantic model in ai3d.core.models.
+# Placeholder tokens use __UPPER_SNAKE_CASE__ convention.
+
+workflows:
+
+  - name: triposr_turntable_to_i2v
+    type: turntable_conditioning
+    backend_dependency: triposr
+    template_path: workflows/triposr_to_video_i2v.json
+    input_schema:
+      __MESH_PATH__: "string — absolute path to generated GLB"
+      __FRAME_COUNT__: "integer — number of turntable frames (default 72)"
+      __FPS__: "integer — frames per second (default 24)"
+      __PROMPT__: "string — video generation prompt"
+      __OUTPUT_PREFIX__: "string — output filename prefix"
+    output_schema:
+      video: "mp4"
+    enabled: true
+    notes:
+      - "Renders turntable from TripoSR GLB, exports as I2V conditioning pack"
+
+  - name: sf3d_turntable_to_i2v
+    type: turntable_conditioning
+    backend_dependency: sf3d
+    template_path: workflows/sf3d_to_video_i2v.json
+    input_schema:
+      __MESH_PATH__: "string — absolute path to SF3D textured GLB"
+      __FRAME_COUNT__: "integer"
+      __FPS__: "integer"
+      __PROMPT__: "string"
+      __OUTPUT_PREFIX__: "string"
+    output_schema:
+      video: "mp4"
+    enabled: true
+    notes:
+      - "Uses SF3D PBR-textured GLB; materials preserved in turntable render"
+
+  - name: depth_normal_pack_gen
+    type: conditioning_pack
+    backend_dependency: blender
+    template_path: workflows/depth_normal_pack.json
+    input_schema:
+      __RGB_DIR__: "string — path to RGB frame directory"
+      __OUTPUT_DIR__: "string — path for conditioning pack output"
+    output_schema:
+      depth_sequence: "directory of PNG depth maps"
+      normal_sequence: "directory of PNG normal maps"
+    enabled: false
+    notes:
+      - "Scaffold — requires Blender depth/normal pass integration (Milestone 2)"
+
+  - name: image_to_3d_fast
+    type: image_to_3d
+    backend_dependency: sf3d
+    template_path: workflows/image_to_3d_fast.json
+    input_schema:
+      __INPUT_IMAGE__: "string — source image path"
+      __OUTPUT_PREFIX__: "string — output filename prefix"
+    output_schema:
+      glb: "textured GLB file"
+    enabled: false
+    notes:
+      - "Scaffold — direct ComfyUI 3D-Pack workflow for SF3D fast path (Milestone 2)"
+
+  - name: hunyuan3d21_image_to_model
+    type: image_to_3d
+    backend_dependency: comfyui_hunyuan3d21
+    template_path: workflows/hunyuan3d21_image_to_model.json
+    input_schema:
+      __INPUT_IMAGE__: "string — filename copied into ComfyUI input directory"
+      __CKPT_NAME__: "string — Hunyuan3D 2.1 checkpoint filename"
+      __OUTPUT_PREFIX__: "string — ComfyUI output prefix"
+      __SEED__: "integer — generation seed"
+      __STEPS__: "integer — sampler steps"
+      __CFG__: "float — guidance scale"
+      __LATENT_RESOLUTION__: "integer — Hunyuan3D latent resolution"
+      __OCTREE_RESOLUTION__: "integer — VAE octree resolution"
+      __THRESHOLD__: "float — voxel-to-mesh threshold"
+    output_schema:
+      glb: "3D model GLB file"
+    enabled: true
+    notes:
+      - "Native ComfyUI Hunyuan3D 2.1 image-to-model workflow using Comfy-Org repackaged checkpoint."
+
+  - name: image_to_3d_hq
+    type: image_to_3d
+    backend_dependency: trellis
+    template_path: workflows/image_to_3d_hq.json
+    input_schema:
+      __INPUT_IMAGE__: "string — source image path"
+      __OUTPUT_PREFIX__: "string — output filename prefix"
+      __SEED__: "integer — generation seed"
+    output_schema:
+      glb: "textured GLB file"
+      splat_ply: "3DGS .ply file"
+    enabled: false
+    notes:
+      - "Scaffold — TRELLIS-based HQ workflow (Milestone 2)"
+
+  - name: firstframe_video_prep
+    type: video_conditioning
+    backend_dependency: blender
+    template_path: workflows/firstframe_video_prep.json
+    input_schema:
+      __FIRST_FRAME_PATH__: "string — path to first-frame PNG"
+      __DEPTH_DIR__: "string — directory of depth map sequence"
+      __NORMAL_DIR__: "string — directory of normal map sequence"
+      __OUTPUT_DIR__: "string — conditioning pack output directory"
+      __PROMPT__: "string — video generation prompt"
+    output_schema:
+      conditioning_pack: "directory with rgb/depth/normal sequences"
+    enabled: false
+    notes:
+      - "Scaffold — first-frame + depth/normal conditioning for CogVideoX/Wan/LTX (Milestone 3)"

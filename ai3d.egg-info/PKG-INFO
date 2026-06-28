@@ -1,0 +1,16 @@
+Metadata-Version: 2.4
+Name: ai3d
+Version: 0.1.0
+Summary: AI 3D Studio — image-to-3D generation, Blender integration, video conditioning
+Author: ai-3d-studio contributors
+Classifier: Programming Language :: Python :: 3
+Classifier: Operating System :: POSIX :: Linux
+Requires-Python: >=3.10
+Requires-Dist: pydantic>=2.0.0
+Requires-Dist: pyyaml>=6.0
+Requires-Dist: requests>=2.31.0
+Dynamic: author
+Dynamic: classifier
+Dynamic: requires-dist
+Dynamic: requires-python
+Dynamic: summary

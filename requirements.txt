@@ -1,0 +1,58 @@
+# ── Core / config ─────────────────────────────────────────────────────────────
+pydantic>=2.0.0
+pydantic-settings>=2.0.0
+pyyaml>=6.0
+
+# ── Image preprocessing ───────────────────────────────────────────────────────
+Pillow>=10.0.0
+rembg>=2.0.50
+opencv-python-headless>=4.8.0
+numpy>=1.24.0
+
+# ── 3D / mesh processing ──────────────────────────────────────────────────────
+trimesh>=4.0.0
+# open3d>=0.18.0          # optional; used for advanced decimation
+xatlas>=0.0.7             # UV atlas generation
+
+# ── TripoSR (install from source) ─────────────────────────────────────────────
+# Clone: git clone https://github.com/stabilityai/TripoSR /mnt/c/ai_tools/TripoSR
+# Install: pip install -e /mnt/c/ai_tools/TripoSR
+# Package name: tsr
+
+# ── SF3D / Stable Fast 3D (install from source) ───────────────────────────────
+# Clone: git clone https://huggingface.co/stabilityai/stable-fast-3d /mnt/c/ai_tools/stable-fast-3d
+# Install: pip install -e /mnt/c/ai_tools/stable-fast-3d
+# Package name: sf3d
+
+# ── PyTorch (install separately, matched to your CUDA version) ────────────────
+# RTX 30xx / 40xx / 50xx — CUDA 12.x:
+#   pip install torch torchvision --index-url https://download.pytorch.org/whl/cu121
+# CPU only:
+#   pip install torch torchvision
+
+# ── ComfyUI client (HTTP only — no package required beyond requests) ──────────
+requests>=2.31.0
+
+# ── FastAPI (optional API layer) ──────────────────────────────────────────────
+fastapi>=0.110.0
+uvicorn[standard]>=0.27.0
+
+# ── Blender (system install — not a pip package) ──────────────────────────────
+# Ubuntu: sudo apt install blender
+# Or Blender PPA for latest version:
+#   sudo add-apt-repository ppa:thomas-schiex/blender
+#   sudo apt install blender
+
+# ── Testing ───────────────────────────────────────────────────────────────────
+pytest>=8.0.0
+pytest-mock>=3.12.0
+
+# ── Milestone 2 (planned) ─────────────────────────────────────────────────────
+# xatlas>=0.0.7          # already listed above
+# nvdiffrast             # differentiable rasterization for texture baker
+# pytorch3d              # texture projection alternative
+
+# ── Milestone 3 (planned) ─────────────────────────────────────────────────────
+# OpenEXR                # for EXR depth sequence export
+# Imath                  # companion to OpenEXR
+# gsplat                 # 3D Gaussian Splatting optimization pass

@@ -1,0 +1,132 @@
+# AI 3D Studio — Model Registry
+# Each entry maps a named model to its local weight path and backend adapter.
+# Matches ModelRegistryEntry Pydantic model in ai3d.core.models.
+
+models:
+
+  # ── Milestone 1: Fully implemented ──────────────────────────────────────────
+
+  - name: triposr
+    source_repo: stabilityai/TripoSR
+    local_path: /mnt/c/ai_models/vision/triposr
+    modality: image-to-3d
+    backend_adapter: triposr
+    format: ckpt
+    required_vram_gb: 8.0
+    enabled: true
+    notes:
+      - "Download: huggingface-cli download stabilityai/TripoSR --local-dir /mnt/c/ai_models/vision/triposr"
+      - "Install package: pip install -e /mnt/c/ai_tools/TripoSR"
+      - "Produces single-view mesh + vertex color. Fast batch preview."
+
+  - name: sf3d
+    source_repo: stabilityai/stable-fast-3d
+    local_path: /mnt/c/ai_models/vision/sf3d
+    modality: image-to-3d
+    backend_adapter: sf3d
+    format: safetensors
+    required_vram_gb: 6.0
+    enabled: true
+    notes:
+      - "Download: huggingface-cli download stabilityai/stable-fast-3d --local-dir /mnt/c/ai_models/vision/sf3d"
+      - "Install package: pip install -e /mnt/c/ai_tools/stable-fast-3d"
+      - "Produces PBR-textured GLB natively. Best single-image quality in M1."
+
+  # ── Milestone 2: Scaffold stubs ──────────────────────────────────────────────
+
+  - name: trellis
+    source_repo: microsoft/TRELLIS
+    local_path: /mnt/c/ai_models/vision/trellis
+    modality: image-to-3d
+    backend_adapter: trellis
+    format: safetensors
+    required_vram_gb: 16.0
+    enabled: false
+    notes:
+      - "Scaffold stub — implementation in Milestone 2"
+      - "Produces 3DGS (.ply) + textured mesh. Highest quality structured-latent approach."
+      - "Install: follow microsoft/TRELLIS README for environment setup"
+
+  - name: trellis2
+    source_repo: microsoft/TRELLIS
+    local_path: /mnt/c/ai_models/vision/trellis2
+    modality: image-to-3d
+    backend_adapter: trellis
+    format: safetensors
+    required_vram_gb: 20.0
+    enabled: false
+    notes:
+      - "Scaffold stub — TRELLIS.2 variant, implementation in Milestone 2"
+
+  - name: hunyuan3d-2
+    source_repo: tencent/Hunyuan3D-2
+    local_path: /mnt/c/ai_models/vision/hunyuan3d2
+    modality: image-to-3d
+    backend_adapter: hunyuan3d
+    format: safetensors
+    required_vram_gb: 24.0
+    enabled: false
+    notes:
+      - "Scaffold stub — implementation in Milestone 2"
+      - "Multi-stage: multi-view generation → mesh reconstruction → texture baking."
+
+  - name: hunyuan3d-21
+    source_repo: tencent/Hunyuan3D-2.1
+    local_path: /mnt/c/ai_models/vision/hunyuan3d21
+    modality: image-to-3d
+    backend_adapter: hunyuan3d
+    format: safetensors
+    required_vram_gb: 24.0
+    enabled: false
+    notes:
+      - "Scaffold stub — Hunyuan3D 2.1 variant, implementation in Milestone 2"
+
+  - name: instantmesh
+    source_repo: TencentARC/InstantMesh
+    local_path: /mnt/c/ai_models/vision/instantmesh
+    modality: image-to-3d
+    backend_adapter: instantmesh
+    format: ckpt
+    required_vram_gb: 23.0
+    enabled: false
+    notes:
+      - "Scaffold stub — implementation in Milestone 2"
+      - "LRM-based sparse-view 3D reconstruction."
+
+  - name: crm
+    source_repo: Zhengyi-Wang/CRM
+    local_path: /mnt/c/ai_models/vision/crm
+    modality: image-to-3d
+    backend_adapter: crm
+    format: safetensors
+    required_vram_gb: 8.0
+    enabled: false
+    notes:
+      - "Scaffold stub — implementation in Milestone 2"
+      - "Convolutional Reconstruction Model; fast and low-VRAM."
+
+  # ── Milestone 3: Scaffold stubs ──────────────────────────────────────────────
+
+  - name: wonder3d
+    source_repo: xxlong0/Wonder3D
+    local_path: /mnt/c/ai_models/vision/wonder3d
+    modality: multiview-diffusion
+    backend_adapter: wonder3d
+    format: safetensors
+    required_vram_gb: 16.0
+    enabled: false
+    notes:
+      - "Scaffold stub — implementation in Milestone 3"
+      - "Produces multi-view images + normal maps. Feeds downstream mesh reconstruction."
+
+  - name: mesh2splat
+    source_repo: mesh2splat/mesh2splat
+    local_path: /mnt/c/ai_models/vision/mesh2splat
+    modality: mesh-to-splat
+    backend_adapter: mesh2splat
+    format: pytorch
+    required_vram_gb: 4.0
+    enabled: false
+    notes:
+      - "Scaffold stub — implementation in Milestone 3"
+      - "Converts cleaned mesh to 3D Gaussian Splat (.ply / .ksplat)."

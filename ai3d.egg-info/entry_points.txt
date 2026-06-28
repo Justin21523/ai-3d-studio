@@ -1,0 +1,2 @@
+[console_scripts]
+ai3d = ai3d.cli.main:main

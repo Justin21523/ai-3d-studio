@@ -1,0 +1,29 @@
+{
+  "slug": "ai-3d-studio",
+  "mode": "mock-safe",
+  "scenarios": [
+    {
+      "id": "product",
+      "label": "Product Turntable",
+      "input": "samples/product.png",
+      "outputs": ["demo_asset.glb", "demo_asset.obj", "pipeline_manifest.yaml"]
+    },
+    {
+      "id": "character",
+      "label": "Character Bust",
+      "input": "samples/character.png",
+      "outputs": ["character_demo.glb", "depth/0001.png", "normal/0001.png"]
+    },
+    {
+      "id": "prop",
+      "label": "Game Prop Concept",
+      "input": "samples/prop.png",
+      "outputs": ["prop_demo.glb", "pack_manifest.yaml"]
+    }
+  ],
+  "interviewHighlights": [
+    "Mock-safe route exercises successful CLI/API/pipeline behavior without GPU services.",
+    "BackendRegistry keeps real and demo backends behind the same BaseBackend contract.",
+    "Pipeline manifests make generated assets reproducible and reviewable."
+  ]
+}

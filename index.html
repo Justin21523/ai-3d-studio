@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI 3D Studio Demo</title>
+    <meta
+      name="description"
+      content="Mock-safe portfolio demo for an image-to-3D asset generation pipeline."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="workspace" aria-label="AI 3D Studio demo workspace">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">AI 3D Studio</p>
+            <h1>Image-to-3D Production Console</h1>
+          </div>
+          <div class="status-pill" id="runtime-status">Mock-safe mode ready</div>
+        </header>
+
+        <section class="hero-grid">
+          <aside class="control-panel" aria-label="Generation controls">
+            <div class="panel-title">
+              <span>Scenario</span>
+              <strong id="scenario-label">Product Turntable</strong>
+            </div>
+
+            <label class="field">
+              <span>Input image</span>
+              <select id="scenario-select">
+                <option value="product">Clean product photo</option>
+                <option value="character">Stylized character bust</option>
+                <option value="prop">Game prop concept</option>
+              </select>
+            </label>
+
+            <label class="field">
+              <span>Backend route</span>
+              <select id="backend-select">
+                <option value="demo">Demo backend (CPU-safe)</option>
+                <option value="sf3d">SF3D (PBR GLB)</option>
+                <option value="triposr">TripoSR (draft mesh)</option>
+                <option value="hunyuan">Hunyuan3D 2.1 via ComfyUI</option>
+              </select>
+            </label>
+
+            <div class="toggle-grid" aria-label="Output options">
+              <label><input type="checkbox" checked /> GLB</label>
+              <label><input type="checkbox" checked /> OBJ</label>
+              <label><input type="checkbox" checked /> Depth</label>
+              <label><input type="checkbox" checked /> Normal</label>
+            </div>
+
+            <button class="primary-action" id="run-button" type="button">
+              Run mock-safe pipeline
+            </button>
+
+            <div class="command-box">
+              <span>CLI smoke command</span>
+              <code id="cli-command">ai3d run-backend --backend demo --output-type glb</code>
+            </div>
+          </aside>
+
+          <section class="viewport" aria-label="Generated asset preview">
+            <div class="scene" id="scene">
+              <div class="grid-floor"></div>
+              <div class="asset-core"></div>
+              <div class="asset-ring ring-a"></div>
+              <div class="asset-ring ring-b"></div>
+              <div class="asset-base"></div>
+            </div>
+            <div class="viewport-overlay">
+              <span id="preview-label">demo_asset.glb</span>
+              <span>72 frame turntable</span>
+            </div>
+          </section>
+
+          <aside class="manifest-panel" aria-label="Run manifest">
+            <div class="panel-title">
+              <span>Run manifest</span>
+              <strong id="run-id">demo-240628</strong>
+            </div>
+            <dl class="manifest-list">
+              <div><dt>Mode</dt><dd>mock-safe</dd></div>
+              <div><dt>Device</dt><dd>CPU</dd></div>
+              <div><dt>External services</dt><dd>not required</dd></div>
+              <div><dt>Artifacts</dt><dd id="artifact-count">6 ready</dd></div>
+            </dl>
+            <div class="health-card">
+              <span>Smoke status</span>
+              <strong id="smoke-status">Ready</strong>
+            </div>
+          </aside>
+        </section>
+
+        <section class="timeline" aria-label="Pipeline stages">
+          <article class="stage complete"><span>01</span><strong>Input ingest</strong><em>sample png</em></article>
+          <article class="stage complete"><span>02</span><strong>Background</strong><em>rembg safe</em></article>
+          <article class="stage complete"><span>03</span><strong>Quality gate</strong><em>coverage OK</em></article>
+          <article class="stage active"><span>04</span><strong>3D generation</strong><em>demo mesh</em></article>
+          <article class="stage queued"><span>05</span><strong>Mesh cleanup</strong><em>trimesh</em></article>
+          <article class="stage queued"><span>06</span><strong>Video pack</strong><em>depth/normal</em></article>
+        </section>
+
+        <section class="bottom-grid">
+          <article class="artifact-board">
+            <div class="section-heading">
+              <h2>Screenshot-ready outputs</h2>
+              <p>Representative artifacts from a successful image-to-3D run.</p>
+            </div>
+            <div class="artifact-grid" id="artifact-grid"></div>
+          </article>
+
+          <article class="metrics-board">
+            <div class="section-heading">
+              <h2>Interview highlights</h2>
+              <p>What reviewers should notice in the implementation.</p>
+            </div>
+            <div class="metric-row"><strong>112</strong><span>pytest checks after demo backend is added</span></div>
+            <div class="metric-row"><strong>8+1</strong><span>real/scaffold backends plus demo route</span></div>
+            <div class="metric-row"><strong>11</strong><span>manifested pipeline stages</span></div>
+            <div class="metric-row"><strong>0 GB</strong><span>VRAM needed for public demo mode</span></div>
+          </article>
+        </section>
+
+        <section class="media-board" aria-label="Captured demo media">
+          <div class="section-heading">
+            <h2>Captured demo media</h2>
+            <p>Assets generated by the demo capture script and reused in the portfolio case study.</p>
+          </div>
+          <div class="media-grid">
+            <video controls playsinline preload="metadata" poster="./media/cover.webp">
+              <source src="./media/demo/demo-walkthrough.webm" type="video/webm" />
+            </video>
+            <img src="./media/screenshots/01-demo-console-desktop.png" alt="Desktop demo console screenshot" />
+            <img src="./media/screenshots/02-demo-completed-desktop.png" alt="Completed demo run screenshot" />
+            <img src="./media/screenshots/03-demo-mobile.png" alt="Mobile demo screenshot" />
+          </div>
+        </section>
+      </section>
+    </main>
+    <script src="./app.js"></script>
+  </body>
+</html>

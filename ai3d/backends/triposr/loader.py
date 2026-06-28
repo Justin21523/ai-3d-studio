@@ -53,15 +53,19 @@ class TripoSRLoader:
         return None
 
     def is_available(self) -> bool:
+        return self.availability_reason() is None
+
+    def availability_reason(self) -> Optional[str]:
+        """Return None when load prerequisites are present, else a precise reason."""
         if self.resolve_path() is None:
-            return False
+            return "Model weights not found on disk."
         if not self._ensure_source_on_path():
-            return False
+            return f"TripoSR source not found at {self._source_root()}."
         try:
             from tsr.system import TSR  # type: ignore[import]  # noqa: F401
-            return True
-        except ImportError:
-            return False
+        except ImportError as exc:
+            return f"TripoSR Python package is not importable: {exc}."
+        return None
 
     # ── Model loading ─────────────────────────────────────────────────────────
 

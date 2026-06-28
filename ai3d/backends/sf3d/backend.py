@@ -55,10 +55,8 @@ class SF3DBackend(BaseBackend):
         found, missing = self._loader.get_model_paths()
         available = self._loader.is_available()
 
-        reason: Optional[str] = None
-        if not available:
-            reason = "Model weights not found on disk."
-        else:
+        reason: Optional[str] = self._loader.availability_reason()
+        if available:
             try:
                 import torch  # type: ignore[import]
                 if self._device == "cuda" and not torch.cuda.is_available():

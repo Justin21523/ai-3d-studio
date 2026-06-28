@@ -46,7 +46,17 @@ class SF3DLoader:
         return None
 
     def is_available(self) -> bool:
-        return self.resolve_path() is not None
+        return self.availability_reason() is None
+
+    def availability_reason(self) -> Optional[str]:
+        """Return None when load prerequisites are present, else a precise reason."""
+        if self.resolve_path() is None:
+            return "Model weights not found on disk."
+        try:
+            from sf3d.system import SF3D  # type: ignore[import]  # noqa: F401
+        except ImportError as exc:
+            return f"Stable Fast 3D Python package is not importable: {exc}."
+        return None
 
     def load(self) -> Any:
         if self._model is not None:

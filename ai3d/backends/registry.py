@@ -54,6 +54,9 @@ class BackendRegistry:
 def _build_default_registry() -> BackendRegistry:
     registry = BackendRegistry()
 
+    from ai3d.backends.demo.backend import DemoBackend
+    registry.register(DemoBackend())
+
     # Milestone 1 — fully implemented
     try:
         from ai3d.backends.triposr.backend import TripoSRBackend
